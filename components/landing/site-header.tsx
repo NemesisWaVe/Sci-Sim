@@ -8,14 +8,17 @@ export function SiteHeader() {
     <header className="pointer-events-none fixed inset-x-0 top-0 z-50 flex items-start justify-between p-4 md:p-6">
       <Link
         href="/"
-        className="pointer-events-auto rounded-xl border border-border bg-card/70 px-4 py-3 backdrop-blur transition hover:bg-card"
+        className="pointer-events-auto flex items-center gap-3 rounded-xl border border-border bg-card/70 px-4 py-3 backdrop-blur transition hover:bg-card"
       >
-        <span className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-foreground">
-          SciSim
-        </span>
-        <span className="ml-2 font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
-          ® Lab
-        </span>
+        <img src="/gallery/logo.jpeg" alt="Sci Sim Logo" className="size-6 rounded-md object-cover" />
+        <div className="flex items-center">
+          <span className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-foreground">
+            SciSim
+          </span>
+          <span className="ml-2 hidden sm:inline-block font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
+            ® Lab
+          </span>
+        </div>
       </Link>
 
       <nav className="pointer-events-auto flex items-center gap-2">
