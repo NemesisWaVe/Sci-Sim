@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react'
 import { GALLERY_PANELS } from '@/lib/subjects'
 
 // Configuration for particle explosion
-const PARTICLE_DENSITY = 6 // Higher = fewer particles (pixel step size)
+// We will calculate density dynamically inside the component so mobile doesn't crash
 const EXPLOSION_FORCE = 12
 
 interface Particle {
@@ -55,6 +55,9 @@ export function BigBangParticles({ triggerProgress }: { triggerProgress: number 
       const vw = canvas.width
       const vh = canvas.height
       
+      // Calculate dynamic density: 6 for desktop, 18 for mobile (reduces particles by 9x)
+      const particleDensity = vw < 768 ? 18 : 6
+
       // We will draw the images to a temporary canvas roughly where the deck is centered
       const cardW = Math.min(vw * 0.5, 400)
       const cardH = cardW * (58 / 64) // approx aspect ratio of the cards in CSS
@@ -80,10 +83,10 @@ export function BigBangParticles({ triggerProgress }: { triggerProgress: number 
         const imgData = ctx.getImageData(drawX, drawY, cardW, cardH)
         const data = imgData.data
 
-        // Sample pixels to create particles
-        for (let y = 0; y < cardH; y += PARTICLE_DENSITY) {
-          for (let x = 0; x < cardW; x += PARTICLE_DENSITY) {
-            const index = (y * Math.floor(cardW) + x) * 4
+        // Use dynamic density
+        for (let py = 0; py < cardH; py += particleDensity) {
+          for (let px = 0; px < cardW; px += particleDensity) {
+            const index = (Math.floor(py) * Math.floor(cardW) + Math.floor(px)) * 4
             const r = data[index]
             const g = data[index + 1]
             const b = data[index + 2]
@@ -91,17 +94,17 @@ export function BigBangParticles({ triggerProgress }: { triggerProgress: number 
 
             if (a > 128) { // Only solid pixels
               // Calculate explosion vector away from center of the deck
-              const px = drawX + x
-              const py = drawY + y
-              const dx = px - cx
-              const dy = py - cy
+              const absX = drawX + px
+              const absY = drawY + py
+              const dx = absX - cx
+              const dy = absY - cy
               const dist = Math.sqrt(dx * dx + dy * dy) + 0.1
               
               const speed = (Math.random() * EXPLOSION_FORCE) + (EXPLOSION_FORCE * 100 / dist)
               
               particlesRef.current.push({
-                x: px,
-                y: py,
+                x: absX,
+                y: absY,
                 vx: (dx / dist) * speed + (Math.random() - 0.5) * 5,
                 vy: (dy / dist) * speed + (Math.random() - 0.5) * 5,
                 life: 1,
@@ -148,7 +151,8 @@ export function BigBangParticles({ triggerProgress }: { triggerProgress: number 
           if (p.life > 0) {
             ctx.fillStyle = p.color
             // size depends on life
-            const size = Math.max(0.5, p.life * (PARTICLE_DENSITY * 0.8))
+            const density = canvas.width < 768 ? 18 : 6
+            const size = Math.max(0.5, p.life * (density * 0.8))
             ctx.fillRect(p.x, p.y, size, size)
           }
         }
