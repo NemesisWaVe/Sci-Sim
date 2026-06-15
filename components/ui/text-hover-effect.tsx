@@ -201,7 +201,7 @@ export const TextHoverEffect = ({
         textAnchor="middle"
         dominantBaseline="middle"
         strokeWidth="0.3"
-        className="font-[helvetica] text-7xl font-bold tracking-tighter fill-transparent stroke-neutral-200 [font-optical-sizing:auto] dark:stroke-neutral-800"
+        className="font-[helvetica] text-7xl font-bold tracking-tighter fill-transparent stroke-neutral-200 [font-optical-sizing:auto] dark:stroke-neutral-800 max-md:!stroke-[1.5px]"
         style={{ opacity: hovered ? 0.7 : 0 }}
       >
         <KineticWord text={text} globalMouseX={globalMouseX} globalMouseY={globalMouseY} svgRef={svgRef} />
@@ -214,7 +214,7 @@ export const TextHoverEffect = ({
         textAnchor="middle"
         dominantBaseline="middle"
         strokeWidth="0.3"
-        className="font-[helvetica] text-7xl font-bold tracking-tighter fill-transparent stroke-neutral-200 [font-optical-sizing:auto] dark:stroke-neutral-800"
+        className="font-[helvetica] text-7xl font-bold tracking-tighter fill-transparent stroke-neutral-200 [font-optical-sizing:auto] dark:stroke-neutral-800 max-md:!stroke-[1.5px]"
       >
         <KineticWord text={text} globalMouseX={globalMouseX} globalMouseY={globalMouseY} svgRef={svgRef} />
       </text>
@@ -228,7 +228,7 @@ export const TextHoverEffect = ({
         stroke="url(#textGradient)"
         strokeWidth="0.3"
         mask="url(#textMask)"
-        className="font-[helvetica] text-7xl font-bold tracking-tighter fill-transparent [font-optical-sizing:auto]"
+        className="font-[helvetica] text-7xl font-bold tracking-tighter fill-transparent [font-optical-sizing:auto] max-md:!stroke-[1.5px]"
       >
         <KineticWord text={text} globalMouseX={globalMouseX} globalMouseY={globalMouseY} svgRef={svgRef} />
       </text>
